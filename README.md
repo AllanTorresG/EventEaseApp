@@ -2,7 +2,7 @@
 This is a project for my Microsoft Full-Stack Developer Professional Certificate using Blazor for Front End development
 
 ## 🚀 Technologies
-- Blazor Web Assamblu
+- Blazor Web Assambly
 - .NET
 - C#
 - HTML
