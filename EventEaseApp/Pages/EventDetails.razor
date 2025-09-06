@@ -1,0 +1,11 @@
+@page "/eventdetails/{Id:int}"
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+}
+
+<h3>Event Details</h3>
+<p>Details for event with Id: @Id</p>
+<a class="btn btn-secondary" href="/">Back to Events</a>
+<a class="btn btn-primary" href="/register/@Id">Register</a>

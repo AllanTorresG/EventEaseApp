@@ -1,0 +1,29 @@
+@page "/user"
+@inject EventEaseApp.Services.UserSessionService UserSession
+
+@if (UserSession.IsRegistered)
+{
+    <span>Welcome, @UserSession.UserName! (Your last registered event was: @UserSession.LastRegisteredEventName)</span>
+    <br />
+    <br />
+    <br />
+    <h5>Your Attended Events:</h5>
+    @if (UserSession.AttendedEventIds.Any())
+    {
+        <ul>
+            @foreach (var eventId in UserSession.AttendedEventIds)
+            {
+                var evt = EventData.EventsList.FirstOrDefault(e => e.Id == eventId);
+                <li>@evt?.Name (@evt?.Date.ToShortDateString())</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <span>You have not attended any events yet.</span>
+    }
+}
+else
+{
+    <span>Welcome, you don't have any event registered</span>
+}

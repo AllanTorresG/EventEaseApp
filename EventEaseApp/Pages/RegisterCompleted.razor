@@ -1,0 +1,18 @@
+@page "/register-completed/{Id:int}"
+@using System.Data.Common
+
+<div class="alert alert-success">Registration successful!</div>     
+<h1>Thank you for register at @selectedEvent.Name</h1>
+<p>This event will have place: @selectedEvent.Location</p>
+<p>Date: @selectedEvent.Date</p>
+
+<a class="btn btn-primary" href="/">Back to Events</a>
+<a class="btn btn-secondary" href="/user">Go to profile</a>
+
+@code 
+{
+    [Parameter]
+    public int Id { get; set; }
+
+     private EventModel? selectedEvent => EventData.EventsList.FirstOrDefault(e => e.Id == Id);
+}

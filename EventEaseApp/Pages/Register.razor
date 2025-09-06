@@ -1,0 +1,63 @@
+@page "/register/{Id:int}"
+@inject EventEaseApp.Services.UserSessionService UserSession
+@inject NavigationManager NavManager  
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private EventModel? selectedEvent => EventData.EventsList.FirstOrDefault(e => e.Id == Id);
+
+    private RegistrationModel registration = new();
+    //state change
+    private bool registrationSuccess = false;
+    
+    private async Task HandleValidSubmit()
+    {   
+       // Saving data in variables
+        UserSession.UserName = registration.Name;
+        UserSession.LastRegisteredEventName = selectedEvent?.Name;
+        UserSession.IsRegistered = true;
+
+        if (!UserSession.AttendedEventIds.Contains(Id))
+        {
+            UserSession.AttendedEventIds.Add(Id);
+            registrationSuccess = true;
+            registration = new RegistrationModel();
+
+            //"Fetching data"
+            await Task.Delay(2000);
+            NavManager.NavigateTo($"/register-completed/{Id}");
+        }else{
+           NavManager.NavigateTo("/already-register");
+        }
+    }
+
+}
+
+@if (registrationSuccess)
+{
+    @* "Fetching data" *@
+    <h3>Processing registration.....</h3>
+}
+else
+{
+<h3>Register for @selectedEvent?.Name</h3>
+<p>Registration form for event with Id: @Id</p>
+    <EditForm Model="@registration" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="registration.Name" required />
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <InputText id="email" class="form-control" @bind-Value="registration.Email" type="email" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </EditForm>
+    <a class="btn btn-secondary" href="/">Back to Events</a>
+}
+
