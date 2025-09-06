@@ -12,7 +12,7 @@ This is a project for my Microsoft Full-Stack Developer Professional Certificate
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/AllanTorresG/EventEase.git
+git clone https://github.com/AllanTorresG/EventEaseApp.git
 cd EventEase
 dotnet run
 ```
